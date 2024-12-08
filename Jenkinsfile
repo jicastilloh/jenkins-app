@@ -13,7 +13,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo 'Clonando el repositorio...'
-                git 'https://github.com/jicastilloh/jenkins-app.git'
+                git url: 'https://github.com/jicastilloh/jenkins-app.git', branch: 'main'
             }
         }
 
