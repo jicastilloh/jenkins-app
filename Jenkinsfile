@@ -88,7 +88,7 @@ pipeline {
                             cd ${REMOTE_PATH} || mkdir -p ${REMOTE_PATH} && cd ${REMOTE_PATH} && \
                             git clone ${GIT_REPO} . && \
                             npm install && \
-                            npm build && \
+                            npm run build && \
                             pm2 start dist/main.js --name "nestjs-app"'
                         '
                         """
