@@ -81,6 +81,10 @@ pipeline {
                         // Comando SSH para conectarse y realizar todas las acciones
                         sh """
                         sshpass -p $REMOTE_PASS ssh -o StrictHostKeyChecking=no $REMOTE_USER@${REMOTE_SERVER} '
+                            source /home/administrator/.nvm/nvm.sh && \
+                            
+                            nvm use 20.18.0 && \
+
                             cd ${REMOTE_PATH} || mkdir -p ${REMOTE_PATH} && cd ${REMOTE_PATH} && \
                             git clone ${GIT_REPO} . && \
                             npm install && \
