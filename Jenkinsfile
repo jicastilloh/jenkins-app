@@ -89,7 +89,7 @@ pipeline {
                             git clone ${GIT_REPO} . && \
                             npm install && \
                             npm run build && \
-                            pm2 start dist/main.js --name "nestjs-app"'
+                            pm2 start dist/main.js --name "nestjs-app"
                         '
                         """
                     }
