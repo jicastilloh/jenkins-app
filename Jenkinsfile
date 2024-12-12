@@ -157,7 +157,7 @@ pipeline {
                         sh """
                         sshpass -p \$REMOTE_PASS ssh -o StrictHostKeyChecking=no \$REMOTE_USER@${REMOTE_SERVER} '
                             mkdir -p backups && \\
-                            tar -czf ./backups/bk-jenkins-app-\$(date +%Y-%m-%d_%H-%M-%S).tar.gz jenkins-app || echo "No hay archivos para comprimir"
+                            tar -zcvf ./backups/bk-jenkins-app-\$(date +%Y-%m-%d_%H-%M-%S).tar.gz jenkins-app || echo "No hay archivos para comprimir"
                         '
                         """
                     }
