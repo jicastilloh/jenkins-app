@@ -141,7 +141,7 @@ pipeline {
     agent any
 
     environment {
-        REMOTE_SERVER = '192.168.0.17' // IP del servidor remoto
+        REMOTE_SERVER = '192.168.0.14' // IP del servidor remoto
         GIT_REPO = 'https://github.com/jicastilloh/jenkins-app.git' // URL del repositorio
         REMOTE_PATH = '/home/administrator/nueva-app' // Ruta de despliegue en el servidor
     }
