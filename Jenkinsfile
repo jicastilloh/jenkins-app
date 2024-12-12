@@ -157,7 +157,7 @@ pipeline {
                         sh """
                         sshpass -p \$REMOTE_PASS ssh -o StrictHostKeyChecking=no \$REMOTE_USER@${REMOTE_SERVER} '
                             mkdir -p backups && \\
-                            tar -zcvf ./backups/bk-jenkins-app-\$(date +%Y-%m-%d_%H-%M-%S).tar.gz jenkins-app || echo "No hay archivos para comprimir"
+                            tar -zcf ./backups/bk-jenkins-app-prod-\$(date +%Y-%m-%d_%H-%M-%S).tar.gz jenkins-app-prod || echo "No hay archivos para comprimir"
                         '
                         """
                     }
@@ -174,7 +174,7 @@ pipeline {
                         echo 'Deteniendo el proceso en el servidor remoto...'
                         sh """
                         sshpass -p \$REMOTE_PASS ssh -o StrictHostKeyChecking=no \$REMOTE_USER@${REMOTE_SERVER} '
-                            pm2 stop jenkins-app || echo "El proceso no estaba ejecutándose"
+                            pm2 stop jenkins-app-prod || echo "El proceso no estaba ejecutándose"
                         '
                         """
                     }
@@ -191,7 +191,7 @@ pipeline {
                         echo 'Eliminando archivos antiguos en el servidor remoto...'
                         sh """
                         sshpass -p \$REMOTE_PASS ssh -o StrictHostKeyChecking=no \$REMOTE_USER@${REMOTE_SERVER} '
-                            rm -rf jenkins-app || echo "No hay archivos antiguos"
+                            rm -rf jenkins-app-prod || echo "No hay archivos antiguos"
                         '
                         """
                     }
@@ -209,12 +209,20 @@ pipeline {
                         sh """
                         sshpass -p \$REMOTE_PASS ssh -o StrictHostKeyChecking=no \$REMOTE_USER@${REMOTE_SERVER} '
                             source /home/administrator/.nvm/nvm.sh && \\
-                            git clone ${GIT_REPO} && \\
+                            
+                            mkdir -p jenkins-app-prod && \\
+                            
+                            git clone ${GIT_REPO} jenkins-app-prod && \\
+                            
                             nvm use 20.18.0 && \\
+                            
                             cd jenkins-app && \\
-                            npm install && \\
+                            
+                            npm i -E && \\
+                            
                             npm run build && \\
-                            pm2 restart jenkins-app || pm2 start dist/main.js --name "jenkins-app"
+                            
+                            pm2 restart jenkins-app-prod || pm2 start dist/main.js --name "jenkins-app-prod"
                         '
                         """
                     }
