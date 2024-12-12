@@ -155,10 +155,9 @@ pipeline {
                     script {
                         echo 'Conectando al servidor remoto y preparando el entorno...'
                         sh """
-                        sshpass -p $REMOTE_PASS ssh -o StrictHostKeyChecking=no $REMOTE_USER@${REMOTE_SERVER} '
-                            mkdir -p backups && \
-
-                            tar -czf ./backups/bk-jenkins-app-$(date +%Y-%m-%d_%H-%M-%S).tar.gz jenkins-app
+                        sshpass -p \$REMOTE_PASS ssh -o StrictHostKeyChecking=no \$REMOTE_USER@${REMOTE_SERVER} '
+                            mkdir -p backups && \\
+                            tar -czf ./backups/bk-jenkins-app-\$(date +%Y-%m-%d_%H-%M-%S).tar.gz jenkins-app
                         '
                         """
                     }
@@ -174,7 +173,7 @@ pipeline {
                     script {
                         echo 'Deteniendo el proceso en el servidor remoto...'
                         sh """
-                        sshpass -p $REMOTE_PASS ssh -o StrictHostKeyChecking=no $REMOTE_USER@${REMOTE_SERVER} '
+                        sshpass -p \$REMOTE_PASS ssh -o StrictHostKeyChecking=no \$REMOTE_USER@${REMOTE_SERVER} '
                             pm2 stop jenkins-app || echo "El proceso no estaba ejecutándose"
                         '
                         """
@@ -191,7 +190,7 @@ pipeline {
                     script {
                         echo 'Eliminando archivos antiguos en el servidor remoto...'
                         sh """
-                        sshpass -p $REMOTE_PASS ssh -o StrictHostKeyChecking=no $REMOTE_USER@${REMOTE_SERVER} '
+                        sshpass -p \$REMOTE_PASS ssh -o StrictHostKeyChecking=no \$REMOTE_USER@${REMOTE_SERVER} '
                             rm -rf jenkins-app || echo "No hay archivos antiguos"
                         '
                         """
@@ -208,19 +207,13 @@ pipeline {
                     script {
                         echo 'Desplegando el proyecto en el servidor remoto...'
                         sh """
-                        sshpass -p $REMOTE_PASS ssh -o StrictHostKeyChecking=no $REMOTE_USER@${REMOTE_SERVER} '
-                            source /home/administrator/.nvm/nvm.sh && \
-                            
-                            git clone ${GIT_REPO} && \
-                            
-                            nvm use 20.18.0 && \
-                            
-                            cd jenkins-app
-                            
-                            npm install && \
-                            
-                            npm run build && \
-                            
+                        sshpass -p \$REMOTE_PASS ssh -o StrictHostKeyChecking=no \$REMOTE_USER@${REMOTE_SERVER} '
+                            source /home/administrator/.nvm/nvm.sh && \\
+                            git clone ${GIT_REPO} && \\
+                            nvm use 20.18.0 && \\
+                            cd jenkins-app && \\
+                            npm install && \\
+                            npm run build && \\
                             pm2 restart jenkins-app || pm2 start dist/main.js --name "jenkins-app"
                         '
                         """
