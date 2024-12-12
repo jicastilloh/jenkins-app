@@ -216,7 +216,7 @@ pipeline {
                             
                             nvm use 20.18.0 && \\
                             
-                            cd jenkins-app && \\
+                            cd jenkins-app-prod && \\
                             
                             npm i -E && \\
                             
