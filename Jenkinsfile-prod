@@ -35,7 +35,7 @@ pipeline {
                         echo 'Deteniendo el proceso en el servidor remoto...'
                         sh """
                         sshpass -p \$REMOTE_PASS ssh -o StrictHostKeyChecking=no \$REMOTE_USER@${REMOTE_SERVER} '
-                            pm2 stop jenkins-app-prod || echo "El proceso no estaba ejecutándose"
+                            source ~/.bashrc pm2 stop jenkins-app-prod || echo "El proceso no estaba ejecutándose"
                         '
                         """
                     }
@@ -83,7 +83,7 @@ pipeline {
                             
                             npm run build && \\
                             
-                            PORT=3000 pm2 restart jenkins-app-prod || PORT=3000 pm2 start dist/main.js --name "jenkins-app-prod"
+                            source ~/.bashrc PORT=3000 pm2 restart jenkins-app-prod || PORT=3000 pm2 start dist/main.js --name "jenkins-app-prod"
                         '
                         """
                     }
