@@ -62,6 +62,8 @@ pipeline {
                             
                             cd jenkins-app-test && \\
 
+                            git checkout testing && \\
+
                             git pull origin testing && \\
                             
                             npm i -E && \\
