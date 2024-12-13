@@ -61,6 +61,8 @@ pipeline {
                             nvm use 20.18.0 && \\
                             
                             cd jenkins-app-test && \\
+
+                            git pull origin testing && \\
                             
                             npm i -E && \\
                             
