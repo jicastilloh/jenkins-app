@@ -83,7 +83,7 @@ pipeline {
                             
                             npm run build && \\
                             
-                            pm2 restart jenkins-app-prod || pm2 start dist/main.js --name "jenkins-app-prod"
+                            PORT=3000 pm2 restart jenkins-app-prod || PORT=3000 pm2 start dist/main.js --name "jenkins-app-prod"
                         '
                         """
                     }
