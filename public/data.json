@@ -11,6 +11,12 @@
             "name": "Iván",
             "lastname": "Hernández",
             "age": 23
+        },
+        {
+            "id": 3,
+            "name": "Alessandra",
+            "lastname": "Aguilar",
+            "age": 20
         }
     ]
 }
