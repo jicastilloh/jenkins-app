@@ -78,10 +78,6 @@ pipeline {
                             nvm use 20.18.0 && \\
                             
                             cd jenkins-app-prod && \\
-
-                            git checkout main && \\
-
-                            git pull origin main && \\
                             
                             npm i -E && \\
                             
