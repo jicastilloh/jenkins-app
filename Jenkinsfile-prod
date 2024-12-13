@@ -79,6 +79,8 @@ pipeline {
                             
                             cd jenkins-app-prod && \\
 
+                            git checkout main && \\
+
                             git pull origin main && \\
                             
                             npm i -E && \\
